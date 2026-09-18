@@ -60,7 +60,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="do-short",
-    description="FastAPI URL shortener (interview dress rehearsal)",
+    description="FastAPI URL shortener",
     version="0.1.0",
     lifespan=lifespan,
 )
@@ -136,7 +136,7 @@ def health() -> HealthResponse:
 
 
 @app.post("/api/v1/links", response_model=LinkCreatedResponse, status_code=201)
-def create_link(
+ndef create_link(
     body: CreateLinkRequest,
     request: Request,
     repo: Annotated[SqliteLinkRepository, Depends(get_repo)],
@@ -171,7 +171,7 @@ def get_link(
 
 
 @app.delete("/api/v1/links/{code}", status_code=204)
-def delete_link(
+ndef delete_link(
     code: str,
     repo: Annotated[SqliteLinkRepository, Depends(get_repo)],
 ) -> Response:
@@ -181,7 +181,7 @@ def delete_link(
 
 
 @app.get("/{code}")
-def redirect_link(
+ndef redirect_link(
     code: str,
     repo: Annotated[SqliteLinkRepository, Depends(get_repo)],
 ) -> RedirectResponse:
