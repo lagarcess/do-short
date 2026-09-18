@@ -1,0 +1,30 @@
+name: do-short
+region: nyc
+services:
+  - name: web
+    github:
+      repo: lagarcess/do-short
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: Dockerfile
+    http_port: 8080
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    health_check:
+      http_path: /health
+    envs:
+      - key: SQLITE_PATH
+        scope: RUN_TIME
+        value: /tmp/do_short.db
+      - key: BASE_URL
+        scope: RUN_TIME
+        value: ${APP_URL}
+      - key: RATE_LIMIT_REQUESTS
+        scope: RUN_TIME
+        value: "30"
+      - key: RATE_LIMIT_WINDOW_SECONDS
+        scope: RUN_TIME
+        value: "60"
+      - key: LOG_LEVEL
+        scope: RUN_TIME
+        value: INFO
