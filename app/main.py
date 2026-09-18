@@ -136,7 +136,7 @@ def health() -> HealthResponse:
 
 
 @app.post("/api/v1/links", response_model=LinkCreatedResponse, status_code=201)
-ndef create_link(
+def create_link(
     body: CreateLinkRequest,
     request: Request,
     repo: Annotated[SqliteLinkRepository, Depends(get_repo)],
@@ -171,7 +171,7 @@ def get_link(
 
 
 @app.delete("/api/v1/links/{code}", status_code=204)
-ndef delete_link(
+def delete_link(
     code: str,
     repo: Annotated[SqliteLinkRepository, Depends(get_repo)],
 ) -> Response:
@@ -181,7 +181,7 @@ ndef delete_link(
 
 
 @app.get("/{code}")
-ndef redirect_link(
+def redirect_link(
     code: str,
     repo: Annotated[SqliteLinkRepository, Depends(get_repo)],
 ) -> RedirectResponse:
