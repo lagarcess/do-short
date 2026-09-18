@@ -1,6 +1,6 @@
 # do-short
 
-FastAPI URL shortener — DigitalOcean interview dress rehearsal.
+FastAPI URL shortener for DigitalOcean App Platform.
 
 Target region for App Platform (documented only, **not deployed** in this PR): **nyc3**.
 
@@ -32,7 +32,7 @@ Errors are structured JSON: `{"error": "...", "detail": "...", "code": "..."}`.
 - **Repository protocol** (`LinkRepository`) with a SQLite implementation so swapping to Postgres is a connection + dialect tweak, not a rewrite of route handlers.
 - **Random codes** via `secrets.token_urlsafe` (truncated); custom aliases validated and uniqueness enforced with **409**.
 - **Soft delete**: `active=0`; redirect and metadata treat inactive as **404**.
-- **Rate limiting**: process-local sliding window keyed by client IP — fine for a single instance dress rehearsal, not for multi-instance production.
+- **Rate limiting**: process-local sliding window keyed by client IP — fine for a single instance, not for multi-instance production.
 - **Config**: `pydantic-settings` from environment / `.env` only.
 
 ## What I'd change at 10× traffic
@@ -45,7 +45,7 @@ Errors are structured JSON: `{"error": "...", "detail": "...", "code": "..."}`.
 
 ## App Platform ephemeral disk note
 
-DigitalOcean App Platform local disk is **ephemeral**: filesystem writes (including SQLite) do **not** survive redeploys, scale events, or instance replacement. For a real App Platform deploy, attach a managed database (Postgres) or an external volume strategy. The Dockerfile defaults `SQLITE_PATH=/tmp/do_short.db` for container convenience; set a durable store for production. Region preference for this rehearsal: **nyc3**.
+DigitalOcean App Platform local disk is **ephemeral**: filesystem writes (including SQLite) do **not** survive redeploys, scale events, or instance replacement. For a real App Platform deploy, attach a managed database (Postgres) or an external volume strategy. The Dockerfile defaults `SQLITE_PATH=/tmp/do_short.db` for container convenience; set a durable store for production. Deploy target region: **nyc3**.
 
 ## Run locally
 
